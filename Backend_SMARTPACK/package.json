@@ -1,0 +1,29 @@
+{
+  "name": "backend_smartpack",
+  "version": "1.0.0",
+  "description": "Backend API for storing user body measurements and order details for tailoring service.",
+  "license": "ISC",
+  "author": "Rohan Chouksey",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-json": "^1.0.0",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.2",
+    "nodemailer": "^7.0.10",
+    "nodemon": "^3.1.10",
+    "validator": "^13.15.20"
+  }
+}

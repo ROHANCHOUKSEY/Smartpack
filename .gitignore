@@ -1,0 +1,4 @@
+.env
+Backend_SMARTPACK/.env
+Admin_SMARTPACK/.env
+User_SMARTPACK/.env
