@@ -102,7 +102,7 @@ exports.registerUser = [
     });
   },
 ];
-
+ 
 exports.sendOtp = async (req, res) => {
   const userid = req.userid;
 
@@ -138,12 +138,10 @@ exports.sendOtp = async (req, res) => {
 
   await user.save();
 
-  return res
-    .status(200)
-    .json({
-      success: true,
-      message: "Successfully send otp, for email verification",
-    });
+  return res.status(200).json({
+    success: true,
+    message: "Successfully send otp, for email verification",
+  });
 };
 
 exports.verifyOtp = async (req, res) => {
@@ -166,16 +164,16 @@ exports.verifyOtp = async (req, res) => {
   (user.isOptVerified = true),
     (user.userotp = ""),
     (user.OtpExpireAt = ""),
-    user.save(); 
+    user.save();
   return res
     .status(200)
     .json({ success: true, message: "Otp Successfully Verified" });
 };
 
 exports.userLogin = async (req, res) => {
-  const { email, passowrd } = req.body;
+  const { email, password } = req.body;
 
-  const user = await User({ email });
+  const user = await User.findOne({ email });
 
   if (!user) {
     return res
@@ -183,7 +181,7 @@ exports.userLogin = async (req, res) => {
       .json({ success: false, message: "User Not Registered" });
   }
 
-  const verifyPassword = await bcrypt.compare(passowrd, user.password);
+  const verifyPassword = await bcrypt.compare(password, user.password);
 
   if (!verifyPassword) {
     return res
@@ -197,17 +195,17 @@ exports.userLogin = async (req, res) => {
     { expiresIn: "7d" }
   );
 
-  res.cookies("token", token);
+  res.cookie("token", token);
 
   await res
     .status(200)
-    .json({ success: true, message: "User Login Successfully" });
+    .json({ success: true, message: "User Login Successfully" }, token);
 };
 
 exports.resetPassword = async (req, res) => {
   const { email } = req.body;
 
-  const user = User.findOne({ email });
+  const user = await User.findOne({ email });
 
   if (!user) {
     return res.status(404).json({ success: false, message: "Invalid Email" });
@@ -218,8 +216,8 @@ exports.resetPassword = async (req, res) => {
   const expireOtp = Date.now() + 24 * 60 * 60 * 1000;
 
   const mailOption = {
-    from: `SmartPack Support" <${process.env.EMAIL_USER}>`,
-    to: email,
+    from: `SmartPack Support ${process.env.EMAIL_USER}`,
+    to: user.email,
     subject: "Password Reset Request – SmartPack",
     html: `
       <div style="font-family: Arial, sans-serif; background-color:#f9fafb; padding: 25px;">
@@ -247,7 +245,7 @@ exports.resetPassword = async (req, res) => {
   user.userotp = generateOtp;
   user.OtpExpireAt = expireOtp;
 
-  user.save();
+  await user.save();
 
   return res
     .status(200)
@@ -292,17 +290,26 @@ exports.newPassword = [
     .matches(/[!@#$%^&*?<>:{}|<>]/)
     .withMessage("Password must contain at least one special letter"),
 
+  check("confirmPassword")
+    .trim()
+    .custom((value, { req }) => {
+      if (value != req.body.password) {
+        throw new Error("Password do not match");
+      }
+      return true;
+    }),
+
   async (req, res) => {
-    const error = req.validationResult(req);
+    const error = validationResult(req);
 
     if (!error.isEmpty()) {
       return res.status(400).json({ success: false, error: error.array() });
     }
 
     const userid = req.userid;
-    const { password } = req.body;
+    const { password, confirmPassword } = req.body;
 
-    const user = User.findById(userid.userid);
+    const user = await User.findById(userid.userid);
 
     if (!user) {
       return res
@@ -310,15 +317,16 @@ exports.newPassword = [
         .json({ success: false, message: "User not found" });
     }
 
-    const newPassword = await bcrypt.hashpassword(password, 12);
+    const newPassword = await bcrypt.hash(password, 12);
+    const newConfirmPassword = await bcrypt.hash(confirmPassword, 12);
 
-    user.passowrd = newPassword;
-
+    user.password = newPassword;
+    
     const mailOption = {
-      from: `SmartPack Support" <${process.env.EMAIL_USER}>`,
+      from: `SmartPack Support ${process.env.EMAIL_USER}`,
       to: user.email,
       subject: "Your SmartPack Password Was Changed Successfully",
-      test: `
+      html: `
       <div style="font-family: Arial, sans-serif; background-color:#f9fafb; padding: 25px;">
         <div style="max-width: 500px; margin: auto; background: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
           <h2 style="color:#2e86de; text-align:center;">Password Changed Successfully</h2>
@@ -333,6 +341,13 @@ exports.newPassword = [
       </div>
     `,
     };
+
+    await transporter.sendMail(mailOption);
+
+    user.userotp = "";
+    user.OtpExpireAt = "";
+
+    await user.save();
 
     return res
       .status(200)

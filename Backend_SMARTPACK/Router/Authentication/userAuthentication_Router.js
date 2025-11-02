@@ -15,7 +15,7 @@ userAuthRouter.post("/verify-otp",verifytoken, UserAuthController.verifyOtp);
 // Password reset
 userAuthRouter.post("/send-reset-otp", UserAuthController.resetPassword);
 userAuthRouter.post("/verify-reset-otp", verifytoken, UserAuthController.verifyResetOtp);
-userAuthRouter.post("/change-password",verifytoken, UserAuthController.resetPassword);
+userAuthRouter.post("/change-password",verifytoken, UserAuthController.newPassword);
 
 //profile
 userAuthRouter.get("/profile", verifytoken, (req, res, next) => {
