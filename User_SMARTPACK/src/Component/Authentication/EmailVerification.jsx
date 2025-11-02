@@ -117,6 +117,7 @@ const EmailVerification = () => {
                                 onPaste={handlePaste}
                                 onKeyDown={(e) => handelkeydown(e, index)}
                                 className="w-12 h-12 text-center text-lg font-semibold border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
                         ))}
                     </div>
@@ -125,7 +126,7 @@ const EmailVerification = () => {
                     <button
                         type="submit"
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
-            shadow-md transition-transform transform hover:scale-[1.02]"
+            shadow-md transition-transform transform hover:scale-[1.02] cursor-pointer"
                     >
                         {loading ? (<span className="flex items-center justify-center">
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

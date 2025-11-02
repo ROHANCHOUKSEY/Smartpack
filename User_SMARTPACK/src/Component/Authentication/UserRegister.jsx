@@ -66,7 +66,7 @@ const UserRegister = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+    <div className="min-h-screen flex items-center justify-center  from-blue-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
       <div className="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg shadow-2xl border border-gray-300 dark:border-gray-700 rounded-2xl p-8">
 
         {/* Title */}
@@ -190,7 +190,7 @@ const UserRegister = () => {
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
-            shadow-md transition-transform transform hover:scale-[1.02]"
+            shadow-md transition-transform transform hover:scale-[1.02] cursor-pointer"
           >
             {loading ? (<span className="flex items-center justify-center">
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

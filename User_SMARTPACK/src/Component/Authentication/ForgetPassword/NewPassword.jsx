@@ -87,6 +87,7 @@ const NewPassword = () => {
                 onChange={handleUsernewPassword}
                 placeholder="Enter new password"
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                cursor-pointer
               />
               <span
                 className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
@@ -110,6 +111,7 @@ const NewPassword = () => {
                 onChange={handleUsernewPassword}
                 placeholder="Confirm new password"
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                required
               />
               <span
                 className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
@@ -124,7 +126,7 @@ const NewPassword = () => {
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
-            shadow-md transition-transform transform hover:scale-[1.02]"
+            shadow-md transition-transform transform hover:scale-[1.02] cursor-pointer"
           >
             {loading ? (<span className="flex items-center justify-center">
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

@@ -77,6 +77,7 @@ const UserLogin = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 
                 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
                 dark:text-white"
+                required
               />
             </div>
           </div>
@@ -97,6 +98,7 @@ const UserLogin = () => {
                 className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 
                 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
                 dark:text-white"
+                required
               />
               <div
                 className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-blue-600"
@@ -121,7 +123,7 @@ const UserLogin = () => {
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
-            shadow-md transition-transform transform hover:scale-[1.02]"
+            shadow-md transition-transform transform hover:scale-[1.02] cursor-pointer"
           >
             {loading ? (<span className="flex items-center justify-center">
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
