@@ -1,8 +1,10 @@
 import React from 'react'
 import UserRegister from './Component/Authentication/UserRegister'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 const App = () => {
+  const {pathname} = useLocation();
+  console.log("location: ", pathname);
   return (
     <>
       <Outlet/>

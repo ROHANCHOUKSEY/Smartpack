@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 
 const EmailVerification = () => {
@@ -18,6 +18,36 @@ const EmailVerification = () => {
         // ✅ Auto-move to next input
         if (value && index < 5) {
             document.getElementById(`otp-input-${index + 1}`).focus();
+        }
+    }
+
+    const handlePaste = (e) => {
+        e.preventDefault();
+        const pastedata = e.clipboardData.getData("text");
+
+        if(!/^\d+$/.test(pastedata)){
+            alert("Only Number's Allowed");
+            return;
+        }
+
+        const updateOtp = [...otp];
+        for(let i=0; i<pastedata.length; i++){
+            updateOtp[i] = pastedata[i]; 
+        }
+        setOtp(updateOtp);
+        const lastIndex = pastedata.length - 1;
+        document.getElementById(`otp-input-${lastIndex}`).focus();
+    }
+
+    const handelkeydown = (e, index) => {
+        if(e.key === "Backspace"){
+            if(otp[index] === "" && index > 0){
+                document.getElementById(`otp-input-${index-1}`).focus();
+            }
+        }else if(e.key === "ArrowLeft" && index > 0){
+            document.getElementById(`otp-input-${index-1}`).focus();
+        }else if(e.key === "ArrowRight" && index < otp.length - 1){
+            document.getElementById(`otp-input-${index+1}`).focus();
         }
     }
 
@@ -45,6 +75,11 @@ const EmailVerification = () => {
             }
         }
     }
+
+    useEffect(() => {
+        const firstInput = document.getElementById(`otp-input-0`);
+        firstInput.focus();
+    }, [otp]);
 
     return (
         <div className="min-h-screen flex items-center justify-center from-blue-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
@@ -74,6 +109,8 @@ const EmailVerification = () => {
                                 value={value}
                                 name="otp"
                                 onChange={(e) => handleVerifyOtp(e.target.value, index)} /* Only UI (no functionality) */
+                                onPaste={handlePaste}
+                                onKeyDown={(e) => handelkeydown(e, index)}
                                 className="w-12 h-12 text-center text-lg font-semibold border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         ))}
@@ -88,14 +125,6 @@ const EmailVerification = () => {
                     </button>
 
                 </form>
-
-                {/* Resend OTP */}
-                <p className="text-center text-gray-600 dark:text-gray-400 text-sm mt-4">
-                    Didn’t receive the code?{" "}
-                    <button className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
-                        Resend OTP
-                    </button>
-                </p>
             </div>
         </div>
     );

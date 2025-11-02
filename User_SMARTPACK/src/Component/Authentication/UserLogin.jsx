@@ -1,9 +1,141 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const UserLogin = () => {
-  return (
-    <div>UserLogin</div>
-  )
-}
+  const [showPassword, setShowPassword] = useState(false);
+  const [userLoginError, setUserLoginError] = useState("");
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: ""
+  });
 
-export default UserLogin
+  const handleUserLogin = (e) => {
+    const { name, value } = e.target;
+    setUserLogin({ ...userLogin, [name]: value });
+  };
+ 
+  const navigate = useNavigate();
+
+  const handleUserLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3006/api/user/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userLogin)
+      });
+      const data = await response.json();
+      if (!response.ok) throw data;
+      navigate("/home");
+      return data;
+    } catch (error) {
+      setUserLoginError(error.message || "An Unexpected Error Occurred");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8">
+        
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
+          Welcome Back
+        </h2>
+        <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-2">
+          Login to your SmartPack account
+        </p>
+
+        {/* Error Message */}
+        {userLoginError && (
+          <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm mt-3">
+            {userLoginError}
+          </div>
+        )}
+
+        {/* Login Form */}
+        <form onSubmit={handleUserLoginSubmit} className="mt-6 space-y-4">
+
+          {/* Email Field */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={userLogin.email}
+                name="email"
+                onChange={handleUserLogin}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 
+                rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
+                dark:text-white"
+              />
+            </div> 
+          </div>
+
+          {/* Password Field */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={userLogin.password}
+                name="password"
+                onChange={handleUserLogin}
+                className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 
+                rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
+                dark:text-white"
+              />
+              <div
+                className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-blue-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </div>
+            </div>
+
+            {/* Forgot Password Link */}
+            <div className="text-right mt-2">
+              <NavLink
+                to="/passwordReset/email"
+                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Forgot Password?
+              </NavLink>
+            </div>
+          </div>
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
+            shadow-md transition-transform transform hover:scale-[1.02]"
+          >
+            Login
+          </button>
+        </form>
+
+        {/* Register Link */}
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+          Don’t have an account?{" "}
+          <NavLink
+            to="/user-register"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Register here
+          </NavLink>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default UserLogin;

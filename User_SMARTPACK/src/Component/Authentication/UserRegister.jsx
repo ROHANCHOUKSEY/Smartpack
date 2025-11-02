@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const UserRegister = () => {
 
@@ -46,7 +46,7 @@ const UserRegister = () => {
 
       const otpData = await otpResponse.json();
       if (!otpResponse) {
-        throw otpData; 
+        throw otpData;
       }
 
       navigate("/email-verification");
@@ -191,6 +191,15 @@ const UserRegister = () => {
             Register
           </button>
         </form>
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+          You are already logged in.{" "}
+          <NavLink
+            to="/user-login"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Login here
+          </NavLink>
+        </p>
       </div>
     </div>
   );
