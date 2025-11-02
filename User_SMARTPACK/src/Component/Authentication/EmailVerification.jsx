@@ -7,6 +7,8 @@ const EmailVerification = () => {
 
     const [otpverifiedError, setOtpVerifiedError] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleVerifyOtp = (value, index) => {  //v=3, i=0
@@ -25,14 +27,14 @@ const EmailVerification = () => {
         e.preventDefault();
         const pastedata = e.clipboardData.getData("text");
 
-        if(!/^\d+$/.test(pastedata)){
+        if (!/^\d+$/.test(pastedata)) {
             alert("Only Number's Allowed");
             return;
         }
 
         const updateOtp = [...otp];
-        for(let i=0; i<pastedata.length; i++){
-            updateOtp[i] = pastedata[i]; 
+        for (let i = 0; i < pastedata.length; i++) {
+            updateOtp[i] = pastedata[i];
         }
         setOtp(updateOtp);
         const lastIndex = pastedata.length - 1;
@@ -40,19 +42,20 @@ const EmailVerification = () => {
     }
 
     const handelkeydown = (e, index) => {
-        if(e.key === "Backspace"){
-            if(otp[index] === "" && index > 0){
-                document.getElementById(`otp-input-${index-1}`).focus();
+        if (e.key === "Backspace") {
+            if (otp[index] === "" && index > 0) {
+                document.getElementById(`otp-input-${index - 1}`).focus();
             }
-        }else if(e.key === "ArrowLeft" && index > 0){
-            document.getElementById(`otp-input-${index-1}`).focus();
-        }else if(e.key === "ArrowRight" && index < otp.length - 1){
-            document.getElementById(`otp-input-${index+1}`).focus();
+        } else if (e.key === "ArrowLeft" && index > 0) {
+            document.getElementById(`otp-input-${index - 1}`).focus();
+        } else if (e.key === "ArrowRight" && index < otp.length - 1) {
+            document.getElementById(`otp-input-${index + 1}`).focus();
         }
     }
 
     const handleSubmitVerifiedOtp = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const finalOtp = otp.join("");
         try {
             const response = await fetch("http://localhost:3006/api/user/verify-otp", {
@@ -73,6 +76,8 @@ const EmailVerification = () => {
             } else {
                 setOtpVerifiedError("Unexpected Error Occured");
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -96,10 +101,10 @@ const EmailVerification = () => {
                 {otpverifiedError !== "" && <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm mt-5">
                     {otpverifiedError}
                 </div>}
- 
+
                 <form onSubmit={handleSubmitVerifiedOtp}>
                     {/* OTP Input Boxes */}
-                    <div className="flex justify-center gap-3 mt-6">
+                    <div className="flex justify-center gap-3 mt-6 mb-6">
                         {otp.map((value, index) => (
                             <input
                                 key={index}
@@ -118,10 +123,17 @@ const EmailVerification = () => {
 
                     {/* Submit Button */}
                     <button
-                        type='submit'
-                        className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg shadow-md transition-transform transform hover:scale-[1.02] focus:ring-2 focus:ring-blue-400"
+                        type="submit"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg 
+            shadow-md transition-transform transform hover:scale-[1.02]"
                     >
-                        Verify Email
+                        {loading ? (<span className="flex items-center justify-center">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Verifying...
+                        </span>) : <span>Verify OTP</span>}
                     </button>
 
                 </form>
