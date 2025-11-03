@@ -99,7 +99,7 @@ const UserLogin = () => {
                 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
                 dark:text-white"
                 required
-              />
+              /> 
               <div
                 className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-blue-600"
                 onClick={() => setShowPassword(!showPassword)}
