@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Mail } from "lucide-react";
 import { Outlet, useNavigate } from "react-router-dom";
+import Smartpackcontext from "../../../Context/Smartpackcontext";
 
 const RequestEmail = () => {
 
-  const [userEmail, setUserEmail] = useState({
-    email: ""
+  const [resetPassEmail, setResetPassEmail] = useState({
+    email: "" 
   })
 
   const [loading, setLoading] = useState(false);
@@ -14,9 +15,11 @@ const RequestEmail = () => {
 
   const [userEmailError, setUserEmailError] = useState("");
 
+  const {setUserEmail} = useContext(Smartpackcontext);
+
   const handleUserEmail = (e) => {
     const { name, value } = e.target;
-    setUserEmail({ ...userEmail, [name]: value });
+    setResetPassEmail({ ...resetPassEmail, [name]: value });
   }
 
   const handleSubmitUserEmail = async (e) => {
@@ -27,12 +30,13 @@ const RequestEmail = () => {
         method: "POST",
         credentials: "include",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(userEmail)
+        body: JSON.stringify(resetPassEmail)
       })
       const data = await response.json();
       if (!response.ok) {
         throw data;
       }
+      setUserEmail(resetPassEmail.email)
       navigate("/passwordReset/verify-otp");
       return data;
     } catch (error) {
@@ -77,7 +81,7 @@ const RequestEmail = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  value={userEmail.email}
+                  value={resetPassEmail.email}
                   name="email"
                   onChange={handleUserEmail}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 

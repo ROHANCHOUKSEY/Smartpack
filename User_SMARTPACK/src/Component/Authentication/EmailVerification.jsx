@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
+import Smartpackcontext from "../../Context/Smartpackcontext";
 
 const EmailVerification = () => {
 
@@ -8,6 +9,8 @@ const EmailVerification = () => {
     const [otpverifiedError, setOtpVerifiedError] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    const { userEmail } = useContext(Smartpackcontext);
 
     const navigate = useNavigate();
 
@@ -97,7 +100,9 @@ const EmailVerification = () => {
                 <p className="text-center text-gray-600 dark:text-gray-400 text-sm mt-2">
                     Enter the 6-digit code sent to your email
                 </p>
-
+                <p className="text-center text-blue-500">
+                    {userEmail}
+                </p>
                 {otpverifiedError !== "" && <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm mt-5">
                     {otpverifiedError}
                 </div>}

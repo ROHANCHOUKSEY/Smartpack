@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Eye, EyeOff } from "lucide-react"
 import { NavLink, useNavigate } from "react-router-dom";
+import Smartpackcontext from "../../Context/Smartpackcontext";
 
 const UserRegister = () => {
 
@@ -15,6 +16,7 @@ const UserRegister = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [registerUserError, setRegisterUserError] = useState([])
   const [loading, setLoading] = useState(false);
+  const {setUserEmail} = useContext(Smartpackcontext);
 
   const navigate = useNavigate();
 
@@ -50,6 +52,7 @@ const UserRegister = () => {
         throw otpData;
       }
 
+      setUserEmail(registerUser.email);
       navigate("/email-verification");
       return data;
     } catch (error) {

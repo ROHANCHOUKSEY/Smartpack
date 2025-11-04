@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Smartpackcontext from '../../../Context/Smartpackcontext';
 
 const VerifyOtp = () => {
 
@@ -9,6 +10,8 @@ const VerifyOtp = () => {
   const [verifyOtpError, setVerifyOtpError] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  const { userEmail } = useContext(Smartpackcontext);
 
   const navigate = useNavigate();
 
@@ -107,7 +110,7 @@ const VerifyOtp = () => {
           <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-2">
             Enter the 6-digit OTP sent to your email to verify your identity.
           </p>
-
+          <p className='text-center text-blue-500'>{userEmail}</p>
           {verifyOtpError !== "" && <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm mt-5">
             {verifyOtpError}
           </div>}

@@ -11,6 +11,7 @@ import RequestEmail from './Component/Authentication/ForgetPassword/RequestEmail
 import VerifyOtp from './Component/Authentication/ForgetPassword/VerifyOtp.jsx';
 import ForgetPasswordLayout from './Component/Authentication/ForgetPassword/ForgetPasswordLayout.jsx';
 import NewPassword from './Component/Authentication/ForgetPassword/NewPassword.jsx';
+import Smartpackprovider from './Context/Smartpackprovider.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,9 +24,9 @@ const router = createBrowserRouter(
         <Route path='home' element={<HomePage />} />
       </Route>
       <Route path='passwordReset' element={<ForgetPasswordLayout />}>
-        <Route path='email' element={<RequestEmail/>}/>
+        <Route path='email' element={<RequestEmail />} />
         <Route path='verify-otp' element={<VerifyOtp />} />
-        <Route path='new-password' element={<NewPassword/>}/>
+        <Route path='new-password' element={<NewPassword />} />
       </Route>
     </>
   )
@@ -33,6 +34,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Smartpackprovider>
+      <RouterProvider router={router} />
+    </Smartpackprovider>
   </StrictMode>,
 )
