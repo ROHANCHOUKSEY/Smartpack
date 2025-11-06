@@ -12,6 +12,8 @@ import VerifyOtp from './Component/Authentication/ForgetPassword/VerifyOtp.jsx';
 import ForgetPasswordLayout from './Component/Authentication/ForgetPassword/ForgetPasswordLayout.jsx';
 import NewPassword from './Component/Authentication/ForgetPassword/NewPassword.jsx';
 import Smartpackprovider from './Context/Smartpackprovider.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
+import PagenotFound from './Component/PagenotFound.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,13 +23,14 @@ const router = createBrowserRouter(
         <Route path='user-register' element={<UserRegister />} />
         <Route path='email-verification' element={<EmailVerification />} />
         <Route path='user-login' element={<UserLogin />} />
-        <Route path='home' element={<HomePage />} />
+        <Route path='home' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
       </Route>
       <Route path='passwordReset' element={<ForgetPasswordLayout />}>
         <Route path='email' element={<RequestEmail />} />
         <Route path='verify-otp' element={<VerifyOtp />} />
         <Route path='new-password' element={<NewPassword />} />
       </Route>
+      <Route path='*' element={<PagenotFound/>} />
     </>
   )
 )

@@ -70,7 +70,7 @@ const UserRegister = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center  from-blue-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
-      <div className="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg shadow-2xl border border-gray-300 dark:border-gray-700 rounded-2xl p-8">
+      <div className="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg shadow-[0px_4px_6px_0px_rgba(0,0,0,0.5)] border border-gray-300 dark:border-gray-700 rounded-2xl p-8">
 
         {/* Title */}
         <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white">

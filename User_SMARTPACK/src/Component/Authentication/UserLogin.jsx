@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import Smartpackcontext from "../../Context/Smartpackcontext";
 
 const UserLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +11,7 @@ const UserLogin = () => {
     email: "",
     password: ""
   });
+  const {setIsLoggined} = useContext(Smartpackcontext);
 
   const handleUserLogin = (e) => {
     const { name, value } = e.target;
@@ -30,6 +32,7 @@ const UserLogin = () => {
       });
       const data = await response.json();
       if (!response.ok) throw data;
+      setIsLoggined(true);
       navigate("/home");
       return data;
     } catch (error) {
@@ -40,8 +43,8 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8">
+    <div className="flex items-center justify-center dark:bg-gray-900 p-4">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-[0px_4px_6px_0px_rgba(0,0,0,0.5)] rounded-2xl p-8">
 
         {/* Title */}
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
@@ -99,7 +102,7 @@ const UserLogin = () => {
                 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 
                 dark:text-white"
                 required
-              /> 
+              />
               <div
                 className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-blue-600"
                 onClick={() => setShowPassword(!showPassword)}
