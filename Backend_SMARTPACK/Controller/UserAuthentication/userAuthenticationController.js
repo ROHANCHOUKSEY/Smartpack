@@ -120,9 +120,7 @@ exports.sendOtp = async (req, res) => {
   try {
     const userid = req.userid;
 
-    console.log("userid: ", userid);
-
-    const user = await User.findById(userid.userid);
+    const user = await User.findById(userid);
 
     if (!user) {
       return res
@@ -171,7 +169,7 @@ exports.verifyOtp = async (req, res) => {
   try {
     const userid = req.userid;
     const { otp } = req.body;
-    const user = await User.findById(userid.userid);
+    const user = await User.findById(userid);
 
     if (!user) {
       return res
@@ -306,7 +304,7 @@ exports.verifyResetOtp = async (req, res) => {
     const userid = req.userid;
     const { otp } = req.body;
 
-    const user = await User.findById(userid.userid);
+    const user = await User.findById(userid);
 
     if (!user) {
       return res
@@ -368,7 +366,7 @@ exports.newPassword = [
       const userid = req.userid;
       const { password, confirmPassword } = req.body;
 
-      const user = await User.findById(userid.userid);
+      const user = await User.findById(userid);
 
       if (!user) {
         return res

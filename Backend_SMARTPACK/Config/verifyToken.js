@@ -9,7 +9,7 @@ const verifyToken = async(req, res, next) => {
         }
 
         const decodeToken = jwt.verify(token, process.env.SECRET_KEY);
-        req.userid = decodeToken; 
+        req.userid = decodeToken.userid; 
         next(); 
 
     }catch(error){
@@ -17,4 +17,4 @@ const verifyToken = async(req, res, next) => {
     } 
 }
 
-module.exports = verifyToken;
+module.exports = verifyToken; 

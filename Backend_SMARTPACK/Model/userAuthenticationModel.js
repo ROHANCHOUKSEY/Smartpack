@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
   isOptVerified: { type: Boolean, default: false },
   resetUserOtp: { type: String, default: "" },
   OtpExpireAt: { type: Number, default: 0 },
+  address: {type:mongoose.Schema.Types.ObjectId, ref: "Address"},
   mearsurement: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "MaleMeasurement",

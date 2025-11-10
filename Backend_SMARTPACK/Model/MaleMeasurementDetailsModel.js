@@ -10,8 +10,8 @@ const MaleMeasuremnetDetailsSchema = mongoose.Schema({
   frontChest: { type: Number, required: true },
   backChestLength: { type: Number, required: true },
   jacket: { type: Number, required: true },
-  pantWaist: { type: Number, required: true },
-  thigh: { type: Number, required: true },
+  pantWaist: { type: Number, required: true }, 
+  thigh: { type: Number, required: true }, 
   fullCrotch: { type: Number, required: true },
   pantLength: { type: Number, required: true },
   arms: { type: Number, required: true },
@@ -19,3 +19,4 @@ const MaleMeasuremnetDetailsSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("MaleMeasurement", MaleMeasuremnetDetailsSchema);
+     

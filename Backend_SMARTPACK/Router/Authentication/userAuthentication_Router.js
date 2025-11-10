@@ -3,7 +3,7 @@ const userAuthRouter = express.Router();
 const UserAuthController = require("../../Controller/UserAuthentication/userAuthenticationController");
 const verifytoken = require("../../Config/verifyToken");
 
-//// Registration & Login
+//// Registration & Login 
 userAuthRouter.post("/register", UserAuthController.registerUser);
 userAuthRouter.post("/login", UserAuthController.userLogin);
 userAuthRouter.post("/logout", UserAuthController.userLogOut);
@@ -22,4 +22,4 @@ userAuthRouter.get("/profile", verifytoken, (req, res, next) => {
   res.json({ message: `Welcome back! Your email is ${req.user.email}`});
 });
  
-module.exports = userAuthRouter; 
+module.exports = userAuthRouter;  

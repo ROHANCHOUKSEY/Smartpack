@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const FemaleMeasurementSchema = new mongoose.Schema(
   {
     // Upper
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "UserModel" },
+    userid: { type: mongoose.Schema.Types.ObjectId, ref: "UserModel" },
     bust: { type: Number, required: true }, // fullest part of chest
     waist: { type: Number, required: true }, // narrowest part of waist
     hips: { type: Number, required: true }, // widest part around hips
