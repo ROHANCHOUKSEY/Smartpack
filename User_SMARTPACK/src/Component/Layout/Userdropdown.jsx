@@ -21,7 +21,7 @@ const Userdropdown = () => {
     }, []);
 
     //handle user logout
-    const handleUserLogout = async () => {
+    const handleUserLogout = async () => { 
         try {
             const response = await fetch("http://localhost:3006/api/user/logout", {
                 method: "POST",
@@ -54,13 +54,13 @@ const Userdropdown = () => {
 
                     {/* Dropdown Menu */}
                     {open && (
-                        <div className="absolute right-0 mt-2 h-50 w-40 bg-white shadow-[0px_4px_4px_4px_rgba(0,0,0,0.1)] rounded-md ">
+                        <div className="absolute z-1 right-0 mt-2 top-10 h-50 w-40 bg-white shadow-[0px_4px_4px_4px_rgba(0,0,0,0.1)] rounded-md ">
                             <ul className="py-2">
                                 <li>
                                     <div className='flex items-center gap-4 hover:bg-gray-100 p-2 cursor-pointer'>
                                         <User className='text-gray-900' />
                                         <button 
-                                            className="w-full text-left text-gray-900"
+                                            className="w-full text-left text-gray-900 cursor-pointer"
                                         >
                                             User Profile
                                         </button>
@@ -70,7 +70,7 @@ const Userdropdown = () => {
                                     <div className='flex items-center gap-4 hover:bg-gray-100 p-2 cursor-pointer'>
                                         <Settings className='text-gray-900' />
                                         <button
-                                            className="w-full text-left text-gray-900"
+                                            className="w-full text-left text-gray-900 cursor-pointer"
                                         >
                                             Setting
                                         </button>
@@ -80,7 +80,7 @@ const Userdropdown = () => {
                                     <div className='flex items-center gap-4 hover:bg-gray-100 p-2 cursor-pointer'>
                                         <LogOut className='text-gray-900' />
                                         <button onClick={handleUserLogout}
-                                            className="w-full text-left text-gray-900"
+                                            className="w-full text-left text-gray-900 cursor-pointer"
                                         >
                                             Sign out
                                         </button>

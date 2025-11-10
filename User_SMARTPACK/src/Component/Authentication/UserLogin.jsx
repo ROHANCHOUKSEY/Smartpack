@@ -11,7 +11,7 @@ const UserLogin = () => {
     email: "",
     password: ""
   });
-  const {setIsLoggined} = useContext(Smartpackcontext);
+  const {setIsLoggined, selectGender} = useContext(Smartpackcontext);
 
   const handleUserLogin = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,7 @@ const UserLogin = () => {
       const data = await response.json();
       if (!response.ok) throw data;
       setIsLoggined(true);
-      navigate("/home");
+      {selectGender === "Male" ? navigate("/malemeasurement") : navigate("/femalemeasurement")}
       return data;
     } catch (error) {
       setUserLoginError(error.message || "An Unexpected Error Occurred");
